@@ -1,6 +1,8 @@
 dimension Dim;
 AutoDeclare Tensor tens;
 AutoDeclare Vector p,ll;
+AutoDeclare Index mu,nu,rho;
+AutoDeclare Symbol sym;
 Vectors p1,H,A,B,pu,pb;
 Tensors f(antisymmetric);
 Function PL,PR,df,da;
@@ -8,13 +10,13 @@ CFunctions C,C0,C1,C2,C00,C11,C12,C22,T;
 Symbols m1,...,m3,U,MQs,Q,gs,L#C,R#C,LG#C,RG#C,MG,Tr,Nc,Cf,Ca;
 Indices mu,rho,nu,o,n,m,tm,tn,beta,b,betap,alphap,a,alpha,ind,delta,k,j,l,c,d;
 
-Local M = Q/16/pi_/pi_*
-	i_*gs*(LG*PL(1)+RG*PR(1))* T(b,beta,betap)*
-	i_*(-g_(1,ll)+MG*gi_(1))*
-	i_*gs*(RG*PL(1)+LG*PR(1))* T(b,alphap,alpha)*
-	i_*
-	(-i_)*gs*(2*ll(mu)+2*pa(mu)+pb(mu))*T(a,betap,alphap)
-
+Local M = Q/16/pi_/pi_*i_*
+	i_*gs*(LG*PL(1)+RG*PR(1))* T(b,beta,alphap)*
+	i_*(-g_(1,o)*(ll(o)+pa(o)+pb(o))+MG*gi_(1))*
+	(-gs)*f(b,a,c)*g_(1,mu)*
+	i_*(-g_(1,rho)*(ll(rho)+pa(rho))+MG*gi_(1))*
+	i_*gs*(RG*PL(1)+LG*PR(1))* T(c,alphap,alpha)*
+	i_
 ;
 
 repeat;
@@ -62,26 +64,69 @@ endrepeat;
 id pb.pb = 0;
 id pa.pa = 0;
 
+**********************************************************
+*                  Insert Loop tensors 			 *
+**********************************************************
 
-id g_(l?,7_,ll)*p?.ll*Q = g_(l,7_,tm)*p(tn)*C(tm,tn);
-id g_(l?,7_,ll)*ll(o?)*Q = g_(l,7_,tm)*C(tm,o);
-id g_(l?,6_,ll)*p?.ll*Q = g_(l,6_,tm)*p(tn)*C(tm,tn);
-id g_(l?,6_,ll)*ll(o?)*Q = g_(l,6_,tm)*C(tm,o);
-id g_(l?,pu?,ll)*p?.ll*Q = g_(l,pu,tm)*p(tn)*C(tm,tn);
-id g_(l?,pu?,ll)*ll(o?)*Q = g_(l,pu,tm)*C(tm,o);
+#procedure seti(name,N);
+#redefine `name'si ",`name'1?,...,`name'`N'?"
+#redefine `name'sf ",`name'1,...,`name'`N'"
+#if ( `N' == 0)
+#redefine `name'si ""
+#redefine `name'sf ""
+#endif
+#endprocedure;
+
+
+#define nusi ""
+#define nusf ""
+#define musi ""
+#define musf ""
+#define rhosi ""
+#define rhosf ""
+
+*TODO 3x l nom cases
+
+* 2x l
+#do M = {4,3,2,1,0}
+#do N = {4,3,2,1,0}
+#do R = {4,3,2,1,0}
+#call seti(nu,`N')
+#call seti(mu,`M')
+#call seti(rho,`R')
+id Q*g_(l? `nusi' , ll `musi', ll `rhosi')= g_(l `nusf' , tm `musf', tn `rhosf')*C(tm,tn);
+id Q*g_(l? `nusi' , ll `musi')*ll(tn) = g_(l `nusf' , tm `musf')*C(tm,tn);
+id Q*g_(l? `nusi' , ll `musi')*ll(tn) = g_(l `nusf' , tm `musf')*C(tm,tn);
+id Q*g_(l? `nusi' , ll `musi')*ll.p? =  g_(l `nusf' , tm `musf')*C(tm,tn)*p(tn);
+#enddo
+#enddo
+#enddo
 id ll(o?)*p?.ll*Q = p(tn)*C(o,tn);
 id ll(o?)*ll(mu?)*Q = C(o,mu);
 id ll.ll*Q = C(rho,rho);
 
-id g_(l?,7_,ll)*Q = g_(l,7_,tm)*C(tm);
-id g_(l?,6_,ll)*Q = g_(l,6_,tm)*C(tm);
-id g_(l?,pu?,ll)*Q = g_(l,pu,tm)*C(tm);
+* 1x l
+#do M = {4,3,2,1,0}
+#do N = {4,3,2,1,0}
+#call seti(nu,`N')
+#call seti(mu,`M')
+id Q*g_(l? `nusi' , ll `musi') =  g_(l `nusf' , tm `musf')*C(tm);
+*#message `nusi',`musi'
+#enddo
+#enddo
 id p?.ll*Q = p(m)*C(m);
-id Q = C0;
-id LG*RG = 0;
-id Nc = 2*(1/2/Ca+Cf);
 
-Print M;Bracket+ pa,pb;.end
+* 0x l
+id Q = C0;
+
+
+
+
+id LG*RG = 0;
+*id Nc = 2*(1/2/Ca+Cf);
+
+
+Print M;Bracket+ C;.end
 
 repeat;
 	id C(mu?,nu?)=
@@ -99,4 +144,3 @@ repeat;
 endrepeat;
 
 *Format C;
-Print M;.end
