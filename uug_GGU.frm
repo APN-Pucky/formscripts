@@ -7,7 +7,7 @@ Vectors p1,H,A,B,pu,pb;
 Tensors f(antisymmetric);
 Function PL,PR,df,da;
 CFunctions C,C0,C1,C2,C00,C11,C12,C22,T;
-Symbols m1,...,m3,U,MQs,Q,gs,L#C,R#C,LG#C,RG#C,MG,Tr,Nc,Cf,Ca;
+Symbols m1,...,m3,U,MQs,Q,gs,L#C,R#C,LG#C,RG#C,MG,Tr,Nc,Cf,Ca,dr;
 Indices mu,rho,nu,o,n,m,tm,tn,beta,b,betap,alphap,a,alpha,ind,delta,k,j,l,c,d;
 
 Local M = Q/16/pi_/pi_*i_*
@@ -94,6 +94,7 @@ id pa.pa = 0;
 #call seti(nu,`N')
 #call seti(mu,`M')
 #call seti(rho,`R')
+id Q*g_(l? `nusi' , ll, mu?, ll)= -g_(l `nusf' , mu)*C(o,o)*dr + 2*g_(l `nusf' , o)*C(mu,o);
 id Q*g_(l? `nusi' , ll `musi', ll `rhosi')= g_(l `nusf' , tm `musf', tn `rhosf')*C(tm,tn);
 id Q*g_(l? `nusi' , ll `musi')*ll(tn) = g_(l `nusf' , tm `musf')*C(tm,tn);
 id Q*g_(l? `nusi' , ll `musi')*ll(tn) = g_(l `nusf' , tm `musf')*C(tm,tn);
@@ -123,7 +124,7 @@ id Q = C0;
 
 
 id LG*RG = 0;
-*id Nc = 2*(1/2/Ca+Cf);
+id Nc = Ca;
 
 
 Print M;Bracket+ C;.end

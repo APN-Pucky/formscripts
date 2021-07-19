@@ -8,13 +8,13 @@ CFunctions C,C0,C1,C2,C00,C11,C12,C22,T;
 Symbols m1,...,m3,U,MQs,Q,gs,L#C,R#C,LG#C,RG#C,MG,Tr,Nc,Cf,Ca;
 Indices mu,rho,nu,o,n,m,tm,tn,beta,b,betap,alphap,a,alpha,ind,delta,k,j,l,c,d;
 
-Local M = Q/16/pi_/pi_*
+Local M = Q/16/pi_/pi_*i_*
 	i_*gs*(LG*PL(1)+RG*PR(1))* T(b,beta,betap)*
 	i_*(-g_(1,ll)+MG*gi_(1))*
 	i_*gs*(RG*PL(1)+LG*PR(1))* T(b,alphap,alpha)*
 	i_*
-	(-i_)*gs*(2*ll(mu)+2*pa(mu)+pb(mu))*T(a,betap,alphap)
-
+	(-i_)*gs*(2*ll(mu)+2*pa(mu)+pb(mu))*T(a,betap,alphap)*
+	i_
 ;
 
 repeat;
