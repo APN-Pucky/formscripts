@@ -7,7 +7,7 @@ Functions V,Ei,Eo,Ui,Uo,ui,uo,Leg,
 	  df,PL,PR,VF
 ;
 CFunctions D,eps,epsbar,T,C,C0,C1,C2,C00,C11,C12,C22,g(symmetric),DIM;
-Symbol b,c,MUs,MXs,L#C,R#C,LG#C,RG#C,gs,MX,Ca,Cf,u,s,t,P1,P2,MG,dr,d;
+Symbol b,c,MUs,MXs,L#C,R#C,LG#C,RG#C,gs,MX,Ca,Cf,u,s,t,P1,P2,MG,dr,d,ax,dim;
 Index a,gamma,beta,alpha,l,tm,tn,o;
 
 Local MMMM = 
@@ -58,29 +58,55 @@ id VF(mu?,a?,beta?,alpha?) =
          g_(1,6_,mu)*C0*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*MG^2*Ca;
 #endif
 id VF(mu?,a?,beta?,alpha?) = 
-       + C(mu,o) * (  - 1/32*g_(1,7_,o)*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca
-          - 1/32*g_(1,6_,o)*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca )
+*       + C(mu,o) * (  - 1/32*g_(1,7_,o)*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca
+*          - 1/32*g_(1,6_,o)*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca )
+*
+*       + C(o,o) * ( 1/64*g_(1,7_,mu)*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca*dr
+*          + 1/64*g_(1,6_,mu)*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca*dr )
+*
+*       + C(tm) * (  - 1/64*g_(1,7_,pb,mu,tm)*T(a,beta,alpha)*i_*pi_^-2*gs^3*
+*         LG^2*Ca - 1/64*g_(1,7_,pa,mu,tm)*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*
+*         Ca - 1/64*g_(1,7_,tm,mu,pa)*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca - 
+*         1/64*g_(1,6_,pb,mu,tm)*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca - 1/64*
+*         g_(1,6_,pa,mu,tm)*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca - 1/64*g_(1,
+*         6_,tm,mu,pa)*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca )
+*
+*       - 1/64*g_(1,7_,pb,mu,pa)*C0*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca - 1/
+*         64*g_(1,7_,pa,mu,pa)*C0*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca - 1/64
+*         *g_(1,7_,mu)*C0*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*MG^2*Ca - 1/64*
+*         g_(1,6_,pb,mu,pa)*C0*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca - 1/64*
+*         g_(1,6_,pa,mu,pa)*C0*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca - 1/64*
+*         g_(1,6_,mu)*C0*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*MG^2*Ca;
+       + q.q * ( 1/16*g_(1,7_,mu)*C2*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca + 
+         1/64*g_(1,7_,mu)*C12*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca*dr + 1/64
+         *g_(1,7_,mu)*C22*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca*dr + 1/16*g_(
+         1,6_,mu)*C2*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca + 1/64*g_(1,6_,mu)
+         *C12*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca*dr + 1/64*g_(1,6_,mu)*C22
+         *T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca*dr )
 
-       + C(o,o) * ( 1/64*g_(1,7_,mu)*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca*dr
-          + 1/64*g_(1,6_,mu)*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca*dr )
+       + g_(1,7_,q)*q(mu) * (  - 1/32*C2*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*
+         Ca - 1/32*C22*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca )
 
-       + C(tm) * (  - 1/64*g_(1,7_,pb,mu,tm)*T(a,beta,alpha)*i_*pi_^-2*gs^3*
-         LG^2*Ca - 1/64*g_(1,7_,pa,mu,tm)*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*
-         Ca - 1/64*g_(1,7_,tm,mu,pa)*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca - 
-         1/64*g_(1,6_,pb,mu,tm)*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca - 1/64*
-         g_(1,6_,pa,mu,tm)*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca - 1/64*g_(1,
-         6_,tm,mu,pa)*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca )
+       + g_(1,7_,q)*pa(mu) * (  - 1/32*C12*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2
+         *Ca )
 
-       - 1/64*g_(1,7_,pb,mu,pa)*C0*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca - 1/
-         64*g_(1,7_,pa,mu,pa)*C0*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca - 1/64
-         *g_(1,7_,mu)*C0*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*MG^2*Ca - 1/64*
-         g_(1,6_,pb,mu,pa)*C0*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca - 1/64*
-         g_(1,6_,pa,mu,pa)*C0*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca - 1/64*
-         g_(1,6_,mu)*C0*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*MG^2*Ca;
+       + g_(1,6_,q)*q(mu) * (  - 1/32*C2*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*
+         Ca - 1/32*C22*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca )
+
+       + g_(1,6_,q)*pa(mu) * (  - 1/32*C12*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2
+         *Ca )
+
+       - 1/64*g_(1,7_,mu)*C0*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*MG^2*Ca - 1/
+         32*g_(1,7_,mu)*C00*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca + 1/64*g_(1
+         ,7_,mu)*C00*T(a,beta,alpha)*i_*pi_^-2*dim*gs^3*LG^2*Ca*dr - 1/64*g_(1
+         ,6_,mu)*C0*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*MG^2*Ca - 1/32*g_(1,6_
+         ,mu)*C00*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca + 1/64*g_(1,6_,mu)*
+         C00*T(a,beta,alpha)*i_*pi_^-2*dim*gs^3*RG^2*Ca*dr;
 	
 *id polsum(mu?,nu?) = -d_(mu,nu);
 *id polsum(mu?,nu?) = -d_(mu,nu) + (pa(mu)*pb(nu)+pa(nu)*pb(mu))/pa.pb;
-id polsum(mu?,nu?) = -d_(mu,nu) + (q(mu)*pb(nu)+q(nu)*pb(mu))/q.pb - q.q*pb(mu)*pb(nu)/q.pb/q.pb;
+*id polsum(mu?,nu?) = -d_(mu,nu) + ax*((q(mu)*pb(nu)+q(nu)*pb(mu))/q.pb - q.q*pb(mu)*pb(nu)/q.pb/q.pb);
+id polsum(mu?,nu?) = -d_(mu,nu) + ((q(mu)*pb(nu)+q(nu)*pb(mu))/q.pb - q.q*pb(mu)*pb(nu)/q.pb/q.pb);
 id PL(l?) = g7_(l)/2;
 id PR(l?) = g6_(l)/2;
 

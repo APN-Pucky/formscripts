@@ -1,9 +1,9 @@
-dimension Dim;
+dimension dim;
 AutoDeclare Tensor tens;
 AutoDeclare Vector p,ll;
 AutoDeclare Index mu,nu,rho;
 AutoDeclare Symbol sym;
-Vectors p1,H,A,B,pu,pb;
+Vectors p1,H,A,B,pu,pb,q,l1,l2;
 Tensors f(antisymmetric);
 Function PL,PR,df,da;
 CFunctions C,C0,C1,C2,C00,C11,C12,C22,T;
@@ -127,7 +127,8 @@ id LG*RG = 0;
 id Nc = Ca;
 
 
-Print M;Bracket+ C;.end
+*Print M;Bracket+ C;.end
+
 
 repeat;
 	id C(mu?,nu?)=
@@ -136,12 +137,21 @@ repeat;
 		+(l2(mu)+l1(mu))*(l2(nu)+l1(nu))*C22
 		+((l2(mu)+l1(mu))*l1(nu)+l1(mu)*(l2(nu)+l1(nu)))*C12;
 	id C(mu?)=l1(mu)*C1+(l2(mu)+l1(mu))*C2;
-	id l1 = pu;
+	id l1 = pa;
 	id l2 = pb;
-	id pu.pb = 1/2*(p1.p1-pu.pu-pb.pb);
 	id pb.pb = 0;
-	id pu.pu = U;
-	id p1.p1 = MQs;
+	id pa.pa = 0;
+	#do N = {4,3,2,1,0}
+	#call seti(nu,`N')
+	id g_(l? `nusi', pa) = 0;
+	id g_(l? `nusi', pb) = +g_(l `nusf', q);
+	id g_(l? `nusi', q , mu?, q) = -g_(l `nusf', mu)*q.q+ 2*q(mu)*g_(l `nusf', q);
+	#enddo
 endrepeat;
+id pb(mu?)=-pa(mu)+q(mu);
+id pb.pa=q.q/2;
+id gs^3*LG^2*Ca*pi_^-2*i_*T(?a) = 32;
+id gs^3*RG^2*Ca*pi_^-2*i_*T(?a) = 32;
 
 *Format C;
+Print M;Bracket+ pa,pb,q;.end

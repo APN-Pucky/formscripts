@@ -1,12 +1,13 @@
 dimension Dim;
 AutoDeclare Tensor tens;
 AutoDeclare Vector p,ll;
-Vectors p1,H,A,B,pu,pb;
+AutoDeclare Index mu;
+Vectors p1,H,A,B,pu,pb,l1,l2,q;
 Tensors f(antisymmetric);
 Function PL,PR,df,da;
 CFunctions C,C0,C1,C2,C00,C11,C12,C22,T;
 Symbols m1,...,m3,U,MQs,Q,gs,L#C,R#C,LG#C,RG#C,MG,Tr,Nc,Cf,Ca;
-Indices mu,rho,nu,o,n,m,tm,tn,beta,b,betap,alphap,a,alpha,ind,delta,k,j,l,c,d;
+Indices rho,nu,o,n,m,tm,tn,beta,b,betap,alphap,a,alpha,ind,delta,k,j,l,c,d;
 
 Local M = Q/16/pi_/pi_*i_*
 	i_*gs*(LG*PL(1)+RG*PR(1))* T(b,beta,betap)*
@@ -81,7 +82,7 @@ id Q = C0;
 id LG*RG = 0;
 id Nc = 2*(1/2/Ca+Cf);
 
-Print M;Bracket+ pa,pb;.end
+*Print M;Bracket+ pa,pb;.end
 
 repeat;
 	id C(mu?,nu?)=
@@ -90,13 +91,16 @@ repeat;
 		+(l2(mu)+l1(mu))*(l2(nu)+l1(nu))*C22
 		+((l2(mu)+l1(mu))*l1(nu)+l1(mu)*(l2(nu)+l1(nu)))*C12;
 	id C(mu?)=l1(mu)*C1+(l2(mu)+l1(mu))*C2;
-	id l1 = pu;
+	id l1 = pa;
 	id l2 = pb;
-	id pu.pb = 1/2*(p1.p1-pu.pu-pb.pb);
 	id pb.pb = 0;
-	id pu.pu = U;
-	id p1.p1 = MQs;
+	id pa.pa = 0;
+	id g_(l?,6_,pa) = 0;
+	id g_(l?,7_,pa) = 0;
+	id g_(l?,6_,pb) = +g_(l,6_,q);
+	id g_(l?,7_,pb) = +g_(l,7_,q);
 endrepeat;
+id pb(mu?)=-pa(mu)+q(mu);
 
 *Format C;
-Print M;.end
+Print M;Bracket+ pa,pb,q;.end
