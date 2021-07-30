@@ -10,11 +10,11 @@ Symbols m1,...,m3,U,MQs,Q,gs,L#C,R#C,LG#C,RG#C,MG,Tr,Nc,Cf,Ca;
 Indices rho,nu,o,n,m,tm,tn,beta,b,betap,alphap,a,alpha,ind,delta,k,j,l,c,d;
 
 Local M = Q/16/pi_/pi_*i_*
-	i_*gs*(LG*PL(1)+RG*PR(1))* T(b,beta,betap)*
-	i_*(-g_(1,ll)+MG*gi_(1))*
-	i_*gs*(RG*PL(1)+LG*PR(1))* T(b,alphap,alpha)*
+	i_*(L*PL(1)+R*PR(1))*
+	i_*(-g_(1,ll))*
+	-i_*gs*(LG*PL(1)+RG*PR(1))* T(b,alphap,alpha)*
 	i_*
-	(-i_)*gs*(2*ll(mu)+2*pa(mu)+pb(mu))*T(a,betap,alphap)*
+	-i_*gs*(2*ll(mu)+2*pa(mu)+pb(mu))*T(a,alpha,alphap)*
 	i_
 ;
 
@@ -79,10 +79,10 @@ id g_(l?,6_,ll)*Q = g_(l,6_,tm)*C(tm);
 id g_(l?,pu?,ll)*Q = g_(l,pu,tm)*C(tm);
 id p?.ll*Q = p(m)*C(m);
 id Q = C0;
-id LG*RG = 0;
+*id LG*RG = 0;
 id Nc = 2*(1/2/Ca+Cf);
 
-Print M;Bracket+ pa,pb;.end
+*Print M;Bracket+ pa,pb;.end
 
 repeat;
 	id C(mu?,nu?)=

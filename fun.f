@@ -1,32 +1,29 @@
-m *= - 1./768.*C0*pow(pi_,-2)*pow(R,2)*pow(RG,2)*pow(gs,4)*pow(Ca,2)*Cf
-      *pow(s,-1)*t*pow(MG,2) - 1./768.*C0*pow(pi_,-2)*pow(L,2)*pow(
-      LG,2)*pow(gs,4)*pow(Ca,2)*Cf*pow(s,-1)*t*pow(MG,2) + 1./768.*C0*
-      pow(pi_,-2)*MXs*pow(R,2)*pow(RG,2)*pow(gs,4)*pow(Ca,2)*Cf*pow(
-      s,-1)*pow(MG,2) + 1./768.*C0*pow(pi_,-2)*MXs*pow(L,2)*pow(LG,2)*
-      pow(gs,4)*pow(Ca,2)*Cf*pow(s,-1)*pow(MG,2) + 1./192.*C2*pow(
-      pi_,-2)*pow(R,2)*pow(RG,2)*pow(gs,4)*pow(Ca,2)*Cf*t + 1./192.*C2*
-      pow(pi_,-2)*pow(L,2)*pow(LG,2)*pow(gs,4)*pow(Ca,2)*Cf*t - 1./192.
-      *C2*pow(pi_,-2)*MXs*pow(R,2)*pow(RG,2)*pow(gs,4)*pow(Ca,2)*Cf - 1.
-      /192.*C2*pow(pi_,-2)*MXs*pow(L,2)*pow(LG,2)*pow(gs,4)*pow(Ca,2)*
-      Cf - 1./384.*C00*pow(pi_,-2)*pow(R,2)*pow(RG,2)*pow(gs,4)*pow(
-      Ca,2)*Cf*pow(s,-1)*t + 1./768.*C00*pow(pi_,-2)*pow(R,2)*pow(RG,2)
-      *pow(gs,4)*pow(Ca,2)*Cf*pow(s,-1)*t*dr*dim - 1./384.*C00*pow(
-      pi_,-2)*pow(L,2)*pow(LG,2)*pow(gs,4)*pow(Ca,2)*Cf*pow(s,-1)*t + 1.
-      /768.*C00*pow(pi_,-2)*pow(L,2)*pow(LG,2)*pow(gs,4)*pow(Ca,2)*Cf*
-      pow(s,-1)*t*dr*dim;
-      _ +=  + 1./384.*C00*pow(pi_,-2)*MXs*pow(R,2)*pow(RG,2)*pow(gs,4)*
-      pow(Ca,2)*Cf*pow(s,-1) - 1./768.*C00*pow(pi_,-2)*MXs*pow(R,2)*
-      pow(RG,2)*pow(gs,4)*pow(Ca,2)*Cf*pow(s,-1)*dr*dim + 1./384.*C00*
-      pow(pi_,-2)*MXs*pow(L,2)*pow(LG,2)*pow(gs,4)*pow(Ca,2)*Cf*pow(
-      s,-1) - 1./768.*C00*pow(pi_,-2)*MXs*pow(L,2)*pow(LG,2)*pow(gs,4)*
-      pow(Ca,2)*Cf*pow(s,-1)*dr*dim + 1./768.*C12*pow(pi_,-2)*pow(R,2)*
-      pow(RG,2)*pow(gs,4)*pow(Ca,2)*Cf*t*dr + 1./768.*C12*pow(pi_,-2)*
-      pow(L,2)*pow(LG,2)*pow(gs,4)*pow(Ca,2)*Cf*t*dr - 1./768.*C12*pow(
-      pi_,-2)*MXs*pow(R,2)*pow(RG,2)*pow(gs,4)*pow(Ca,2)*Cf*dr - 1./768.
-      *C12*pow(pi_,-2)*MXs*pow(L,2)*pow(LG,2)*pow(gs,4)*pow(Ca,2)*Cf*dr
-       + 1./768.*C22*pow(pi_,-2)*pow(R,2)*pow(RG,2)*pow(gs,4)*pow(Ca,2)
-      *Cf*t*dr + 1./768.*C22*pow(pi_,-2)*pow(L,2)*pow(LG,2)*pow(gs,4)*
-      pow(Ca,2)*Cf*t*dr - 1./768.*C22*pow(pi_,-2)*MXs*pow(R,2)*pow(
-      RG,2)*pow(gs,4)*pow(Ca,2)*Cf*dr - 1./768.*C22*pow(pi_,-2)*MXs*
-      pow(L,2)*pow(LG,2)*pow(gs,4)*pow(Ca,2)*Cf*dr;
+m *= - 1/384*C00*Denom( - MGs + pa.pa - 2*pa.p1 + p1.p1)*pi_^-2*R^2*LG^2*gs^4*
+      Cf*s^-1*Nc*t^3 - 1/256*C00*Denom( - MGs + pa.pa - 2*pa.p1 + p1.p1)*
+      pi_^-2*R^2*LG^2*gs^4*Cf*Nc*t^2 - 1/768*C00*Denom( - MGs + pa.pa - 2*
+      pa.p1 + p1.p1)*pi_^-2*R^2*LG^2*gs^4*Cf*s*Nc*t - 1/384*C00*Denom( - MGs
+       + pa.pa - 2*pa.p1 + p1.p1)*pi_^-2*L^2*RG^2*gs^4*Cf*s^-1*Nc*t^3 - 1/256*
+      C00*Denom( - MGs + pa.pa - 2*pa.p1 + p1.p1)*pi_^-2*L^2*RG^2*gs^4*Cf*Nc*
+      t^2 - 1/768*C00*Denom( - MGs + pa.pa - 2*pa.p1 + p1.p1)*pi_^-2*L^2*RG^2*
+      gs^4*Cf*s*Nc*t + 1/384*C00*Denom( - MGs + pa.pa - 2*pa.p1 + p1.p1)*
+      pi_^-2*MXs*R^2*LG^2*gs^4*Cf*s^-1*Nc*t^2 + 1/768*C00*Denom( - MGs + pa.pa
+       - 2*pa.p1 + p1.p1)*pi_^-2*MXs*R^2*LG^2*gs^4*Cf*Nc*t + 1/384*C00*Denom(
+       - MGs + pa.pa - 2*pa.p1 + p1.p1)*pi_^-2*MXs*L^2*RG^2*gs^4*Cf*s^-1*Nc*
+      t^2 + 1/768*C00*Denom( - MGs + pa.pa - 2*pa.p1 + p1.p1)*pi_^-2*MXs*L^2*
+      RG^2*gs^4*Cf*Nc*t + 1/192*C00*Denom( - MGs + pa.pa - 2*pa.p1 + p1.p1)*
+      pi_^-2*MUs*R^2*LG^2*gs^4*Cf*s^-1*Nc*t^2 + 1/256*C00*Denom( - MGs + pa.pa
+       - 2*pa.p1 + p1.p1)*pi_^-2*MUs*R^2*LG^2*gs^4*Cf*Nc*t + 1/192*C00*Denom(
+       - MGs + pa.pa - 2*pa.p1 + p1.p1)*pi_^-2*MUs*L^2*RG^2*gs^4*Cf*s^-1*Nc*
+      t^2 + 1/256*C00*Denom( - MGs + pa.pa - 2*pa.p1 + p1.p1)*pi_^-2*MUs*L^2*
+      RG^2*gs^4*Cf*Nc*t - 1/192*C00*Denom( - MGs + pa.pa - 2*pa.p1 + p1.p1)*
+      pi_^-2*MUs*MXs*R^2*LG^2*gs^4*Cf*s^-1*Nc*t - 1/768*C00*Denom( - MGs + 
+      pa.pa - 2*pa.p1 + p1.p1)*pi_^-2*MUs*MXs*R^2*LG^2*gs^4*Cf*Nc - 1/192*C00*
+      Denom( - MGs + pa.pa - 2*pa.p1 + p1.p1)*pi_^-2*MUs*MXs*L^2*RG^2*gs^4*Cf*
+      s^-1*Nc*t - 1/768*C00*Denom( - MGs + pa.pa - 2*pa.p1 + p1.p1)*pi_^-2*MUs
+      *MXs*L^2*RG^2*gs^4*Cf*Nc - 1/384*C00*Denom( - MGs + pa.pa - 2*pa.p1 + 
+      p1.p1)*pi_^-2*MUs^2*R^2*LG^2*gs^4*Cf*s^-1*Nc*t - 1/384*C00*Denom( - MGs
+       + pa.pa - 2*pa.p1 + p1.p1)*pi_^-2*MUs^2*L^2*RG^2*gs^4*Cf*s^-1*Nc*t + 1/
+      384*C00*Denom( - MGs + pa.pa - 2*pa.p1 + p1.p1)*pi_^-2*MUs^2*MXs*R^2*
+      LG^2*gs^4*Cf*s^-1*Nc + 1/384*C00*Denom( - MGs + pa.pa - 2*pa.p1 + p1.p1)
+      *pi_^-2*MUs^2*MXs*L^2*RG^2*gs^4*Cf*s^-1*Nc;
 
