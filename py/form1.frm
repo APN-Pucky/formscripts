@@ -1,5 +1,5 @@
 
-Symbols s,t,u,dim,m1,...,m3,U,MG,MGs,MU,MX,MXs,MUs,Q,gs,L#C,R#C,LG#C,RG#C,MG,Tr,Nc,Cf,Ca,dr;
+Symbols s,t,u,dim,m1,...,m3,U,MG,MGs,MU,MX,MXs,MUs,Q,gs,L#C,R#C,LG#C,RG#C,Lp#C,Rp#C,LGp#C,RGp#C,MG,Tr,Nc,Cf,Ca,dr;
 dimension dim;
 AutoDeclare Tensor tens;
 AutoDeclare Vector p,ll,k,l;
@@ -8,24 +8,17 @@ AutoDeclare Symbol sym;
 Vectors p1,H,pu,pb,q,l1,l2;
 Tensors f(antisymmetric),polsum(symmetric),Gamma;
 Function PL,PR,df,da,VF;
-CFunctions C,C0,C1,C2,C00,C11,C12,C22,T,A,B,D,Denom,DIMD;
+CFunctions T,A,B,D,Denom,DIMD,C,C0,C1,C2,C00,C11,C12,C22,DIMDC00;
 Indices a,o,n,m,tm,tn,beta,b,betap,alphap,a,alpha,ind,delta,k,j,l,c,d;
 
 Local M = Q/16/pi_/pi_*i_*
-	-i_*gs*g_(1,rho)*
-	-i_*g_(1,ll)*
-	-i_*gs*g_(1,kappa)*
-	-i_*d_(kappa,sigma)*
-	-gs*(
-		- d_(mu,nu)*(pA(sigma)-pB(sigma)) 
-		- d_(nu,sigma)*(pB(mu)-pC(mu)) 
-		- d_(sigma,mu)*(pC(nu)-pA(nu)))*
-	-i_*d_(nu,rho)*
-	-i_/2*Ca*T(a,beta,alpha)
+	i_*gs*(LG*PL(1)+RG*PR(1))* T(b,beta,alphap)*
+	i_*(-g_(1,o)*(ll(o)+pa(o)+pb(o))+MG*gi_(1))*
+	(-gs)*f(b,a,c)*g_(1,mu)*
+	i_*(-g_(1,rho)*(ll(rho)+pa(rho))+MG*gi_(1))*
+	i_*gs*(RG*PL(1)+LG*PR(1))* T(c,alphap,alpha)*
+	i_
 ;
-id pA = pb;
-id pB = -(ll+pa+pb);
-id pC = ll+pa;
 
 repeat;
 id PL(ind?) = g7_(ind)/2;
@@ -139,6 +132,6 @@ id p?.ll*Q = p(m)*C(m);
 * 0x l
 id Q = C0;
 
-*id LG*RG = 0;
-*id Nc = 2*(1/2/Ca+Cf);
+id LG*RG = 0;
+id Nc = Ca;
 Bracket+ A,B,C,D;.sort;print M;.sort;

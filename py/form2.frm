@@ -1,5 +1,5 @@
 
-Symbols s,t,u,dim,m1,...,m3,U,MG,MGs,MU,MX,MXs,MUs,Q,gs,L#C,R#C,LG#C,RG#C,MG,Tr,Nc,Cf,Ca,dr;
+Symbols s,t,u,dim,m1,...,m3,U,MG,MGs,MU,MX,MXs,MUs,Q,gs,L#C,R#C,LG#C,RG#C,Lp#C,Rp#C,LGp#C,RGp#C,MG,Tr,Nc,Cf,Ca,dr;
 dimension dim;
 AutoDeclare Tensor tens;
 AutoDeclare Vector p,ll,k,l;
@@ -8,7 +8,7 @@ AutoDeclare Symbol sym;
 Vectors p1,H,pu,pb,q,l1,l2;
 Tensors f(antisymmetric),polsum(symmetric),Gamma;
 Function PL,PR,df,da,VF;
-CFunctions C,C0,C1,C2,C00,C11,C12,C22,T,A,B,D,Denom,DIMD;
+CFunctions T,A,B,D,Denom,DIMD,C,C0,C1,C2,C00,C11,C12,C22,DIMDC00;
 Indices a,o,n,m,tm,tn,beta,b,betap,alphap,a,alpha,ind,delta,k,j,l,c,d;
 
     Local MMMM = 
@@ -25,7 +25,7 @@ Indices a,o,n,m,tm,tn,beta,b,betap,alphap,a,alpha,ind,delta,k,j,l,c,d;
 ;
 
 id VF(mu?,a?,beta?,alpha?) = 
-+C(tm)*(1/32*g_(1,pb,tm,mu)*T(a,beta,alpha)*i_*pi_^-2*gs^3*Ca-1/32*g_(1,pa,tm,mu)*T(a,beta,alpha)*i_*pi_^-2*gs^3*Ca+1/16*g_(1,tm)*T(a,beta,alpha)*pb(mu)*i_*pi_^-2*gs^3*Ca-1/32*g_(1,tm)*T(a,beta,alpha)*pb(mu)*i_*pi_^-2*dim*gs^3*Ca*dr+1/8*g_(1,tm)*T(a,beta,alpha)*pa(mu)*i_*pi_^-2*gs^3*Ca-1/16*g_(1,tm)*T(a,beta,alpha)*pa(mu)*i_*pi_^-2*dim*gs^3*Ca*dr-1/16*g_(1,mu,tm,pb)*T(a,beta,alpha)*i_*pi_^-2*gs^3*Ca-1/32*g_(1,mu,tm,pa)*T(a,beta,alpha)*i_*pi_^-2*gs^3*Ca)+C(tm,mu)*(1/8*g_(1,tm)*T(a,beta,alpha)*i_*pi_^-2*gs^3*Ca-1/16*g_(1,tm)*T(a,beta,alpha)*i_*pi_^-2*dim*gs^3*Ca*dr)+C(rho,rho)*(-1/16*g_(1,mu)*T(a,beta,alpha)*i_*pi_^-2*gs^3*Ca*dr);;
++C(tm)*(-1/64*g_(1,7_,pb,mu,tm)*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca-1/64*g_(1,7_,pa,mu,tm)*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca-1/64*g_(1,7_,tm,mu,pa)*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca-1/64*g_(1,6_,pb,mu,tm)*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca-1/64*g_(1,6_,pa,mu,tm)*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca-1/64*g_(1,6_,tm,mu,pa)*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca)+C(tm,mu)*(-1/32*g_(1,7_,tm)*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca-1/32*g_(1,6_,tm)*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca)+C(rho,rho)*(1/64*g_(1,7_,mu)*T(a,beta,alpha)*i_*pi_^-2*gs^3*LG^2*Ca*dr+1/64*g_(1,6_,mu)*T(a,beta,alpha)*i_*pi_^-2*gs^3*RG^2*Ca*dr)-1/64*g_(1,7_,pb,mu,pa)*T(a,beta,alpha)*C0*i_*pi_^-2*gs^3*LG^2*Ca-1/64*g_(1,7_,pa,mu,pa)*T(a,beta,alpha)*C0*i_*pi_^-2*gs^3*LG^2*Ca-1/64*g_(1,7_,mu)*T(a,beta,alpha)*C0*i_*pi_^-2*MG^2*gs^3*LG^2*Ca-1/64*g_(1,6_,pb,mu,pa)*T(a,beta,alpha)*C0*i_*pi_^-2*gs^3*RG^2*Ca-1/64*g_(1,6_,pa,mu,pa)*T(a,beta,alpha)*C0*i_*pi_^-2*gs^3*RG^2*Ca-1/64*g_(1,6_,mu)*T(a,beta,alpha)*C0*i_*pi_^-2*MG^2*gs^3*RG^2*Ca;;
 *id polsum(mu?,nu?) = -d_(mu,nu) + (pa(mu)*pb(nu)+pa(nu)*pb(mu))/pa.pb;
 *id polsum(mu?,nu?) = -d_(mu,nu) + ax*((q(mu)*pb(nu)+q(nu)*pb(mu))/q.pb - q.q*pb(mu)*pb(nu)/q.pb/q.pb);
 id polsum(mu?,nu?) = -d_(mu,nu) + ((q(mu)*pb(nu)+q(nu)*pb(mu))/q.pb - q.q*pb(mu)*pb(nu)/q.pb/q.pb);
@@ -76,7 +76,7 @@ repeat;
 	id l1 = pa;
 	id l2 = pb;
 endrepeat;
-id C00*dr = DIMD(C00);
+id C00*dr = DIMDC00;
 id C11*dr = (C11);
 id C12*dr = (C12);
 id C22*dr = (C22);

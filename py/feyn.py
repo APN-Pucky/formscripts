@@ -1,10 +1,11 @@
 import form
 import re
 import feyn
+import subprocess
 count = 0
-
+paves = 'C,C0,C1,C2,C00,C11,C12,C22,DIMDC00'
 init = '''
-Symbols s,t,u,dim,m1,...,m3,U,MG,MGs,MU,MX,MXs,MUs,Q,gs,L#C,R#C,LG#C,RG#C,MG,Tr,Nc,Cf,Ca,dr;
+Symbols s,t,u,dim,m1,...,m3,U,MG,MGs,MU,MX,MXs,MUs,Q,gs,L#C,R#C,LG#C,RG#C,Lp#C,Rp#C,LGp#C,RGp#C,MG,Tr,Nc,Cf,Ca,dr;
 dimension dim;
 AutoDeclare Tensor tens;
 AutoDeclare Vector p,ll,k,l;
@@ -13,7 +14,7 @@ AutoDeclare Symbol sym;
 Vectors p1,H,pu,pb,q,l1,l2;
 Tensors f(antisymmetric),polsum(symmetric),Gamma;
 Function PL,PR,df,da,VF;
-CFunctions C,C0,C1,C2,C00,C11,C12,C22,T,A,B,D,Denom,DIMD;
+CFunctions T,A,B,D,Denom,DIMD,''' + paves+ ''';
 Indices a,o,n,m,tm,tn,beta,b,betap,alphap,a,alpha,ind,delta,k,j,l,c,d;
 '''
 
@@ -159,7 +160,7 @@ repeat;
 	id l1 = pa;
 	id l2 = pb;
 endrepeat;
-id C00*dr = DIMD(C00);
+id C00*dr = DIMDC00;
 id C11*dr = (C11);
 id C12*dr = (C12);
 id C22*dr = (C22);
@@ -210,16 +211,36 @@ def run(s):
             r = re.sub(r'\+factor_\^?[0-9]*',r'',r).strip("*") + ";"
             print(r+ "\n")
             return r
-# TODO debug print to file and run it manually
 
+# TODO debug print to file and run it manually
 def toC(s):
-    with form.open(keep_log=1000) as f:
-        l = "TMP"
-        txt = feyn.init + "L TMP = " + s + ";Factorize;Format C;.sort;"
-        f.write(txt)
-        r = f.read("" + l)
-        r = re.sub(r'factor_',r'',r)
-        r = re.sub(r';_\+=\+pow\(,\d*\)',r'',r)
-        r = r.strip("+").strip("*")
-        print(r)
-        return r
+   txt = feyn.init + "L TMP = " + s + ";Factorize;Print TMP;.sort;"
+
+   #with open("toc.frm","w")as f:
+   #   f.write(txt)
+   #s = subprocess.getstatusoutput('form toc.frm')[1]
+   #print(s)
+   #r = s.split("TMP =")[-1].split(";")[0] + ";"
+   #print(r)
+
+   #print(r.split(")\n"))
+   with form.open(keep_log=1000) as frm:
+      frm.write(txt)
+      ret = frm.read("TMP")
+      print(ret)
+      facs = re.sub("\\+factor_\\^?\\d*","factor_",ret).split("factor_")
+      print(facs)
+      print()
+      fin = ""
+      for fac in facs[1::]:
+         frm.write(feyn.init + "L TMP = " + fac.strip("*") + ";Format C;Bracket+ "+feyn.paves+"; .sort")
+         tmpr =  frm.read("TMP")
+         nl = "\n" if ";_+=" in tmpr else ""
+         fin =  fin + "("+ nl +tmpr.replace(";_+=","\n\n") + nl+")*"
+
+
+      fin = fin[:-1:] + ";"
+      print(fin)
+   return fin
+
+
